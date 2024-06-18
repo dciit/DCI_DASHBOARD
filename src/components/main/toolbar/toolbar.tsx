@@ -46,46 +46,44 @@ function ToolbarComponent() {
                 check = false;
             }
         });
-        if(!check){
-            dispatch({type:'LOGOUT'});
+        if (!check) {
+            dispatch({ type: 'LOGOUT' });
             setTimeout(() => {
                 navigate(`/${base}/login`)
             }, 500);
-        }else{
+        } else {
             setLoadAccountContent(false);
         }
     }, [])
     return (
-        <div className='h-[50px] bg-[#232323] sticky top-0' style={{ borderBottom: '1px solid #ddd' }}>
-            <Stack direction={'row'} justifyContent={'space-between'} className='h-full' alignContent={'center'}>
-                <Stack direction={'row'} alignItems={'center'} spacing={3} pl={2}>
-                    <div>
-                        <IconButton onClick={toggleDrawer(true)}><DensityMediumIcon /></IconButton>
-                        <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
-                            <Box width={'175px'}>
-                                <Stack p={1} gap={1} className='cursor-pointer'>
-                                    <Typography className='text-[14px]'>Module {VITE_VERSION}</Typography>
-                                </Stack>
-                            </Box>
-                        </Drawer>
-                    </div>
-                </Stack>
-                <Stack alignItems={'center'} spacing={1} direction={'row'} className='cursor-pointer select-none' >
-                    <Typography className='font-bold uppercase  flex justify-center items-center text-[1.5em] text-white italic' onClick={handleHome}>{projectName}</Typography>
-                </Stack>
-                <Stack justifyContent={'center'} pr={2}>
+        <div className='h-[50px] flex-none bg-[#232323] sticky top-0 border-b'>
+            <div className='grid grid-cols-7 h-full'>
+                <div className='col-span-2 flex items-center pl-3'>
+                    <IconButton onClick={toggleDrawer(true)} sx={{ color: 'white' }}    ><DensityMediumIcon /></IconButton>
+                    <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
+                        <Box width={'175px'}>
+                            <Stack p={1} gap={1} className='cursor-pointer'>
+                                <Typography className='text-[14px]'>Module {VITE_VERSION}</Typography>
+                            </Stack>
+                        </Box>
+                    </Drawer>
+                </div>
+                <div className='col-span-3 flex items-center justify-center' >
+                    <span className='text-white' onClick={handleHome}>{projectName}</span>
+                </div>
+                <div className='col-span-2 flex items-center justify-end pr-3'>
                     {
                         loadAccountContent ? <Skeleton variant="rounded" width={210} height={30} /> : <div onClick={handleOpenMenu} className='flex items-center gap-2 cursor-pointer select-none' >
-                            <Typography className=''>{
+                            <span className='text-white'>{
                                 (reducer.login) ? `${reducer.name}.${reducer.surn.substring(0, 1)}` : '######'
-                            }</Typography>
+                            }</span>
                             <Avatar sx={{ width: 36, height: 36 }} src={`${imagepath}${empcode}.jpg`}>{
 
                             }</Avatar>
                         </div>
                     }
-                </Stack>
-            </Stack>
+                </div>
+            </div>
             <MenuComponent open={open} openMenu={openMenu} closeMenu={handleCloseMenu} handleOpenMenu={handleOpenMenu} logout={handleLogout} />
         </div>
     )
