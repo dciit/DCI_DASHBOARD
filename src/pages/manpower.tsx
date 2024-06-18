@@ -2,7 +2,12 @@ import React from 'react'
 
 function Manpower() {
     return (
-        <div>Manpower</div>
+        <div>
+            <span>Manpower</span>
+            {
+                [...Array(50)].map((_, i) => <p key={i}>{i}</p>)
+            }
+        </div>
     )
 }
 

@@ -56,7 +56,6 @@ function Home() {
 
             </div>
             <div id="drawer" className={`${openDrawer == true ? 'h-[500px] ' : 'flex-none'} border-t`}>
-
                 <div className=" bg-white flex items-center">
                     <div className="grow">
                         <Tabs
@@ -82,7 +81,7 @@ function Home() {
                         </IconButton>
                     </div>
                 </div>
-                <div id="content" className={`bg-[#f5f5f5] h-[100%] ${openDrawer == true ? '' : 'hidden'}`}>
+                <div id="content" className={`border-t border-[#eee] p-[14px] h-[100%] ${openDrawer == true ? '' : 'hidden'}`}>
                     {menu[value].component}
                 </div>
             </div>

@@ -11,7 +11,7 @@ function Layout() {
             <Toolbar />
             {/* <div className='py-3 px-6 bg-white h-full flex flex-col gap-2'>
                 <BreadcrumbsComponent /> */}
-            <div className='grow '>
+            <div className='grow overflow-auto'>
                 <Outlet />
             </div>
             {/* </div> */}
