@@ -1,4 +1,5 @@
 import { apsapi } from '@/constants';
+import { ApsMainProps, ViApsPartMasterProps } from '@/interface/aps.interface';
 import axios from 'axios';
 const http = axios.create({
     baseURL: apsapi,
@@ -7,15 +8,21 @@ const http = axios.create({
     }
 });
 
-export function API_GET(code: string) {
-    return new Promise<any>(resolve => {
-        http.get(`/login/${code}`).then((res) => {
+export function ViApsPartMaster() {
+    return new Promise<ViApsPartMasterProps[]>(resolve => {
+        http.get(`/aps/data/maininout`).then((res) => {
             resolve(res.data);
-        }).catch((e)=>{
-            resolve({
-                status : e.response.status,
-                message : e.response.statusText
-            });
+        }).catch((e) => {
+            console.log(e);
+        });
+    })
+}
+export function ApsMainGetData(){
+    return new Promise<ApsMainProps[]>(resolve => {
+        http.get(`/ApsMainGetData`).then((res) => {
+            resolve(res.data);
+        }).catch((e) => {
+            console.log(e);
         });
     })
 }
