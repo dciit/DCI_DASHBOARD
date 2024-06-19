@@ -40,7 +40,6 @@ function ToolbarComponent() {
     }
     useEffect(() => {
         let check = true;
-        console.log(Object.keys(redux))
         reduxCheck.map((o: string) => {
             if (!Object.keys(redux).includes(o)) {
                 check = false;
