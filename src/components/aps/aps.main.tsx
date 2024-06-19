@@ -4,7 +4,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { ApsMainProps } from '@/interface/aps.interface';
 import { CircularProgress } from '@mui/material';
 import { ApsMainGetData } from '@/service/aps.service';
-
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 function ApsMain() {
     const [main, setMain] = useState<ApsMainProps[]>([]);
     const [load, setLoad] = useState<boolean>(true);
@@ -24,45 +24,103 @@ function ApsMain() {
     }
     return (
         <div>
-            <p>ApsMain</p>
             <div className='flex justify-center py-2 cursor-pointer select-none'>
                 <ChevronLeftIcon className='hover:scale-110 transition-all duration-300' />
                 <div>Date : {new Date().toLocaleDateString()}</div>
                 <ChevronRightIcon className='hover:scale-110 transition-all duration-300' />
             </div>
-            <table className='w-full'>
-                <thead>
-                    <tr>
-                        <th className='border'>SEQUENCE</th>
-                        <th className='border'>WCNO</th>
-                        <th className='border'>MODEL CODE	</th>
-                        <th className='border'>PartNo</th>
-                        <th className='border'>Plan</th>
-                        <th className='border'>Actual</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        load ? <tr><td className='border' colSpan={6}><div className='flex flex-col justify-center items-center py-3'>
-                            <CircularProgress />
-                            <span>กำลังโหลดข้อมูล</span>
-                        </div></td></tr> :
-                            (
-                                main.length == 0 ? <div>ไม่พบข้อมูล</div> :
-                                    main.map((item, index) => (
-                                        <tr key={index}>
-                                            <td className='border'>{item.sequnce}</td>
-                                            <td className='border'>{item.wcno}</td>
-                                            <td className='border'>{item.model}</td>
-                                            <td className='border'>{item.partno}</td>
-                                            <td className='border'>{item.plan}</td>
-                                            <td className='border'>{item.actual}</td>
-                                        </tr>
-                                    ))
-                            )
-                    }
-                </tbody>
-            </table>
+            <div className='grid grid-cols-2'>
+                <div className='col-span-1'>
+                    <table className='w-full'>
+                        <thead>
+                            <tr>
+                                <td className='border text-center ' colSpan={7} >MAIN</td>
+                            </tr>
+                            <tr>
+                                <td className='border text-center'>SEQUENCE</td>
+                                <td className='border text-center'>WCNO</td>
+                                <td className='border text-center'>MODEL CODE	</td>
+                                <td className='border text-center'>PartNo</td>
+                                <td className='border text-center'>Plan</td>
+                                <td className='border text-center'>Actual</td>
+                                <td className='border text-center'> Remark</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                load ? <tr><td className='border' colSpan={14}><div className='flex flex-col justify-center items-center py-3'>
+                                    <CircularProgress />
+                                    <span>กำลังโหลดข้อมูล</span>
+                                </div></td></tr> :
+                                    (
+                                        main.filter((o: ApsMainProps) => o.subline == 'ASSEMBLY LINE4 (SCR)').length == 0 ? <div>ไม่พบข้อมูล</div> :
+                                            main.filter((o: ApsMainProps) => o.subline == 'ASSEMBLY LINE4 (SCR)').map((item: ApsMainProps, index: number) => {
+                                                return <tr key={index}>
+                                                    <td className='border text-center'>{index + 1}</td>
+                                                    <td className='border text-center'>{item.p_wcno}</td>
+                                                    <td className='border text-center'>{item.p_modelcode}</td>
+                                                    <td className='border text-center'>{item.p_model}</td>
+                                                    <td className='border text-center'>{item.p_planqty}</td>
+                                                    <td className='border text-center'>-</td>
+                                                    <td className='border text-center'>
+                                                        <div className='flex justify-center bg-red-50 border border-red-300 w-fit rounded-md px-3 text-red-500 cursor-pointer select-none shadow-md'>
+                                                            <EditOutlinedIcon />
+                                                            <div>หมายเหตุ</div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            })
+                                    )
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div className='col-span-1'>
+                    <table className='w-full'>
+                        <thead>
+                            <tr>
+                                <td className='border text-center ' colSpan={7} >FINAL</td>
+                            </tr>
+                            <tr>
+                                <td className='border text-center'>SEQUENCE</td>
+                                <td className='border text-center'>WCNO</td>
+                                <td className='border text-center'>MODEL CODE	</td>
+                                <td className='border text-center'>PartNo</td>
+                                <td className='border text-center'>Plan</td>
+                                <td className='border text-center'>Actual</td>
+                                <td className='border text-center'> Remark</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                load ? <tr><td className='border' colSpan={14}><div className='flex flex-col justify-center items-center py-3'>
+                                    <CircularProgress />
+                                    <span>กำลังโหลดข้อมูล</span>
+                                </div></td></tr> :
+                                    (
+                                        main.filter((o: ApsMainProps) => o.subline == 'FINAL-ASSEMBLY LINE4 (SCR)').length == 0 ? <div>ไม่พบข้อมูล</div> :
+                                            main.filter((o: ApsMainProps) => o.subline == 'FINAL-ASSEMBLY LINE4 (SCR)').map((item: ApsMainProps, index: number) => {
+                                                return <tr key={index}>
+                                                    <td className='border text-center'>{index + 1}</td>
+                                                    <td className='border text-center'>{item.p_wcno}</td>
+                                                    <td className='border text-center'>{item.p_modelcode}</td>
+                                                    <td className='border text-center'>{item.p_model}</td>
+                                                    <td className='border text-center'>{item.p_planqty}</td>
+                                                    <td className='border text-center'>-</td>
+                                                    <td className='border text-center'>
+                                                        <div className='flex justify-center bg-red-50 border border-red-300 w-fit rounded-md px-3 text-red-500 cursor-pointer select-none shadow-md'>
+                                                            <EditOutlinedIcon />
+                                                            <div>หมายเหตุ</div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            })
+                                    )
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     )
 }
