@@ -5,28 +5,44 @@ import { ApsMainProps } from '@/interface/aps.interface';
 import { CircularProgress } from '@mui/material';
 import { ApsMainGetData } from '@/service/aps.service';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import moment from 'moment';
 function ApsMain() {
-    const [main, setMain] = useState<ApsMainProps[]>([]);
+    let dateformat = 'DD/MM/YYYY';
+    const [data, setData] = useState<ApsMainProps[]>([]);
     const [load, setLoad] = useState<boolean>(true);
+    const [date, setDate] = useState<string>(moment().format(dateformat));
     useEffect(() => {
         init();
     }, [])
     const init = async () => {
         try {
             setLoad(true)
-            const res = await ApsMainGetData();
-            console.log(res)
-            setMain(res);
+            await fetchData();
             setLoad(false)
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            alert(error.message)
         }
     }
+
+    const fetchData = async () => {
+        try {
+            setLoad(true);
+            const res = await ApsMainGetData(moment(date, dateformat).format('YYYYMMDD'));
+            setData(res);
+            setLoad(false);
+        } catch (error: any) {
+            alert(error.message)
+        }
+    }
+    useEffect(() => {
+        fetchData();
+    }, [date])
     return (
         <div>
             <div className='flex justify-center py-2 cursor-pointer select-none'>
-                <ChevronLeftIcon className='hover:scale-110 transition-all duration-300' />
-                <ChevronRightIcon className='hover:scale-110 transition-all duration-300' />
+                <div onClick={() => setDate((prev) => moment(prev, dateformat).add('days', -1).format(dateformat))}><ChevronLeftIcon className='hover:scale-110 transition-all duration-300' /></div>
+                <div>{date}</div>
+                <div onClick={() => setDate((prev) => moment(prev, dateformat).add('days', 1).format(dateformat))}> <ChevronRightIcon className='hover:scale-110 transition-all duration-300' /></div>
             </div>
             <div className='grid grid-cols-2'>
                 <div className='col-span-1'>
@@ -52,8 +68,8 @@ function ApsMain() {
                                     <span>กำลังโหลดข้อมูล</span>
                                 </div></td></tr> :
                                     (
-                                        main.filter((o: ApsMainProps) => o.subline == 'ASSEMBLY LINE4 (SCR)').length == 0 ? <div>ไม่พบข้อมูล</div> :
-                                            main.filter((o: ApsMainProps) => o.subline == 'ASSEMBLY LINE4 (SCR)').map((item: ApsMainProps, index: number) => {
+                                        data.filter((o: ApsMainProps) => o.subline == 'ASSEMBLY LINE4 (SCR)').length == 0 ? <div>ไม่พบข้อมูล</div> :
+                                            data.filter((o: ApsMainProps) => o.subline == 'ASSEMBLY LINE4 (SCR)').map((item: ApsMainProps, index: number) => {
                                                 return <tr key={index}>
                                                     <td className='border text-center'>{index + 1}</td>
                                                     <td className='border text-center'>{item.p_wcno}</td>
@@ -97,8 +113,8 @@ function ApsMain() {
                                     <span>กำลังโหลดข้อมูล</span>
                                 </div></td></tr> :
                                     (
-                                        main.filter((o: ApsMainProps) => o.subline == 'FINAL-ASSEMBLY LINE4 (SCR)').length == 0 ? <div>ไม่พบข้อมูล</div> :
-                                            main.filter((o: ApsMainProps) => o.subline == 'FINAL-ASSEMBLY LINE4 (SCR)').map((item: ApsMainProps, index: number) => {
+                                        data.filter((o: ApsMainProps) => o.subline == 'FINAL-ASSEMBLY LINE4 (SCR)').length == 0 ? <div>ไม่พบข้อมูล</div> :
+                                            data.filter((o: ApsMainProps) => o.subline == 'FINAL-ASSEMBLY LINE4 (SCR)').map((item: ApsMainProps, index: number) => {
                                                 return <tr key={index}>
                                                     <td className='border text-center'>{index + 1}</td>
                                                     <td className='border text-center'>{item.p_wcno}</td>

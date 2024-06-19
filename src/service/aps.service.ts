@@ -17,9 +17,9 @@ export function ViApsPartMaster() {
         });
     })
 }
-export function ApsMainGetData(){
+export function ApsMainGetData(date: string) {
     return new Promise<ApsMainProps[]>(resolve => {
-        http.get(`/ApsMainGetData`).then((res) => {
+        http.get(`/ApsMainGetData/${date}`).then((res) => {
             resolve(res.data);
         }).catch((e) => {
             console.log(e);
