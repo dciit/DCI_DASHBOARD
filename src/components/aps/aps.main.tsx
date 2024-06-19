@@ -26,7 +26,6 @@ function ApsMain() {
         <div>
             <div className='flex justify-center py-2 cursor-pointer select-none'>
                 <ChevronLeftIcon className='hover:scale-110 transition-all duration-300' />
-                <div>Date : {new Date().toLocaleDateString()}</div>
                 <ChevronRightIcon className='hover:scale-110 transition-all duration-300' />
             </div>
             <div className='grid grid-cols-2'>
