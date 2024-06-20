@@ -85,7 +85,7 @@ function Home() {
                         </div>
                     </nav>
                 </div>
-                <div id="content" className={`border-t border-[#eee] p-[14px] h-[100%] ${openDrawer == true ? '' : 'hidden'}`}>
+                <div id="content" className={`bg-gray-50 border-t border-[#eee] p-[14px] h-[100%] ${openDrawer == true ? '' : 'hidden'}`}>
                     {menu[value].component}
                 </div>
             </div>
