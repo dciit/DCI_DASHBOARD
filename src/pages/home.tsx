@@ -39,27 +39,22 @@ function Home() {
         { key: '5', text: 'Line-Out', icon: <SyncAltOutlinedIcon />, component: <Result />, disable: true },
         { key: '86', text: 'Problem', icon: <WindPowerOutlinedIcon />, component: <Result />, disable: true },
     ])
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setOnce(false);
-        setValue(newValue);
-    };
+    // const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    //     setOnce(false);
+    //     setValue(newValue);
+    // };
     useEffect(() => {
         if (once == false) {
             setValue(value);
             setOpenDrawer(true);
         }
     }, [once, value])
-    const handleChangeFac = (event: React.SyntheticEvent, newValue: number) => {
-        setValueFac(newValue);
-    };
-    const handleChangeProcess = (event: React.SyntheticEvent, newValue: number) => {
-        setValueProcess(newValue);
-    }
-    const handleChangeMenu = (index: number) => {
-        console.log(index)
+    const handleChangeMenu = (menuIndex: number) => {
+        setOpenDrawer(true);
+        setValue(menuIndex);
     }
     return (
-        <div className="flex flex-col overflow-x-hidden h-[100%]">
+        <div id="dashboard" className="flex flex-col overflow-x-hidden h-[100%]">
             <div className=" grow h-[95%]  bg-green-50 flex items-center justify-center border">
                 <div className='h-full w-[95%] bg-blue-200  flex justify-center'>
                     <svg viewBox={`0 0 ${layout.width} ${layout.height}`} preserveAspectRatio="xMidYMid meet">
@@ -67,15 +62,23 @@ function Home() {
                     </svg>
                 </div>
             </div>
-            <div className="  flex-none h-[500px] flex flex-col border-r transition-all duration-300 " >
-                <div>
+            <div className={`flex-none ${openDrawer == true && ' h-[500px]'} flex flex-col border-r transition-all duration-300`} >
+                <div className="flex ">
                     <nav className="flex-1 flex  gap-3 px-6">
                         {
                             menu.map((item, index) => {
                                 // return <Tab disabled={item.disable} key={index} label={item.text} iconPosition="start" icon={item.icon} />
-                                return <div className="cursor-pointer select-none py-3" onClick={() => handleChangeMenu(index)}>{item.text}</div>
+                                return <div className={`cursor-pointer select-none py-3 ${value == index ? 'text-[#5c5fc8]' : ''}`} onClick={() => handleChangeMenu(index)}>{item.text}</div>
                             })
                         }
+                        <div className={`flex-none flex items-centerpx-[12px] ${openDrawer == true ? '' : 'hidden'}`}>
+                            <IconButton onClick={() => {
+                                setOpenDrawer(!openDrawer);
+                                setOnce(true);
+                            }}>
+                                <CloseIcon />
+                            </IconButton>
+                        </div>
                     </nav>
                 </div>
                 <div id="content" className={`border-t border-[#eee] p-[14px] h-[100%] ${openDrawer == true ? '' : 'hidden'}`}>
