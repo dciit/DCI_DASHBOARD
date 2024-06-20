@@ -32,12 +32,12 @@ function Home() {
     const [valueFac, setValueFac] = useState<number>(0)
     const [valueProcess, setValueProcess] = useState<number>(0);
     const [menu, setmenu] = useState<MenuProps[]>([
-        { key: '1', text: 'Manpower', icon: <Groups3OutlinedIcon />, component: <Manpower />, disable: false },
-        { key: '2', text: 'APS', icon: <LeaderboardOutlinedIcon />, component: <Aps />, disable: false },
-        { key: '3', text: 'Line Effciency', icon: <SsidChartOutlinedIcon />, component: <Effciency />, disable: false },
-        { key: '4', text: 'Machine Status', icon: <SpeedOutlinedIcon />, component: <Result />, disable: true },
-        { key: '5', text: 'Line-Out', icon: <SyncAltOutlinedIcon />, component: <Result />, disable: true },
-        { key: '86', text: 'Problem', icon: <WindPowerOutlinedIcon />, component: <Result />, disable: true },
+        { key: '1', text: 'Manpower', icon: <Groups3OutlinedIcon sx={{fontSize:'18px'}} />, component: <Manpower />, disable: false },
+        { key: '2', text: 'APS', icon: <LeaderboardOutlinedIcon sx={{fontSize:'18px'}} />, component: <Aps />, disable: false },
+        { key: '3', text: 'Line Effciency', icon: <SsidChartOutlinedIcon sx={{fontSize:'18px'}} />, component: <Effciency />, disable: false },
+        { key: '4', text: 'Machine Status', icon: <SpeedOutlinedIcon sx={{fontSize:'18px'}} />, component: <Result />, disable: true },
+        { key: '5', text: 'Line-Out', icon: <SyncAltOutlinedIcon sx={{fontSize:'18px'}} />, component: <Result />, disable: true },
+        { key: '86', text: 'Problem', icon: <WindPowerOutlinedIcon sx={{fontSize:'18px'}} />, component: <Result />, disable: true },
     ])
     // const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     //     setOnce(false);
@@ -55,29 +55,33 @@ function Home() {
     }
     return (
         <div id="dashboard" className="flex flex-col overflow-x-hidden h-[100%]">
-            <div className=" grow h-[95%]  bg-green-50 flex items-center justify-center border">
-                <div className='h-full w-[95%] bg-blue-200  flex justify-center'>
+            <div className=" grow h-[95%]  flex items-center justify-center border bg-gray-50 ">
+                <div className='h-full w-[95%]   flex justify-center'>
                     <svg viewBox={`0 0 ${layout.width} ${layout.height}`} preserveAspectRatio="xMidYMid meet">
                         <circle cx="46" cy="45" r="40"></circle>
                     </svg>
                 </div>
             </div>
-            <div className={`flex-none ${openDrawer == true && ' h-[500px]'} flex flex-col border-r transition-all duration-300`} >
+            <div className={`flex-none ${openDrawer == true && ' h-[500px]'} bg-[#fffff] flex flex-col border-r transition-all duration-1000`} >
                 <div className="flex ">
-                    <nav className="flex-1 flex  gap-3 px-6">
-                        {
-                            menu.map((item, index) => {
-                                // return <Tab disabled={item.disable} key={index} label={item.text} iconPosition="start" icon={item.icon} />
-                                return <div className={`cursor-pointer select-none py-3 ${value == index ? 'text-[#5c5fc8]' : ''}`} onClick={() => handleChangeMenu(index)}>{item.text}</div>
-                            })
-                        }
-                        <div className={`flex-none flex items-centerpx-[12px] ${openDrawer == true ? '' : 'hidden'}`}>
-                            <IconButton onClick={() => {
-                                setOpenDrawer(!openDrawer);
-                                setOnce(true);
-                            }}>
-                                <CloseIcon />
-                            </IconButton>
+                    <nav className="flex-1 flex">
+                        <div className="grow flex">
+                            {
+                                menu.map((item, index) => {
+                                    // return <Tab disabled={item.disable} key={index} label={item.text} iconPosition="start" icon={item.icon} />
+                                    return <div className={`flex items-center justify-center gap-2  cursor-pointer select-none py-3 min-w-[100px] text-center px-[14px] ${value == index ? 'text-[#5c5fc8] border-b-2 border-[#5c5fc8]   font-semibold' : 'text-[#5f5f5f]'} ${item.disable == true ? ' opacity-40 cursor-not-allowed' : ''}`} onClick={() => item.disable == true ? null : handleChangeMenu(index)} key={index}>
+                                        {item.icon}
+                                        <div className=" text-[14px]">{item.text}</div>
+                                    </div>
+                                })
+                            }
+                        </div>
+                        <div className={`flex-none flex min-w-[50px] justify-center items-centerpx-[12px] items-center cursor-pointer select-none hover:bg-[#ddd] ${openDrawer == true ? '' : 'hidden'}`} onClick={() => {
+                            setOpenDrawer(!openDrawer);
+                            setValue(0);
+                            setOnce(true);
+                        }}>
+                            <CloseIcon />
                         </div>
                     </nav>
                 </div>

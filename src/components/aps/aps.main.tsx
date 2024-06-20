@@ -41,7 +41,7 @@ function ApsMain() {
     }, [date])
     return (
         <div className='p-3' id='aps'>
-            <table className='w-full'>
+            <table className='w-full bg-white'>
                 <thead>
                     <tr>
                         <td className='border text-center' colSpan={14}>
