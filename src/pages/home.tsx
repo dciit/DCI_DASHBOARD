@@ -39,10 +39,6 @@ function Home() {
         { key: '5', text: 'Line-Out', icon: <SyncAltOutlinedIcon sx={{fontSize:'18px'}} />, component: <Result />, disable: true },
         { key: '86', text: 'Problem', icon: <WindPowerOutlinedIcon sx={{fontSize:'18px'}} />, component: <Result />, disable: true },
     ])
-    // const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    //     setOnce(false);
-    //     setValue(newValue);
-    // };
     useEffect(() => {
         if (once == false) {
             setValue(value);
@@ -55,8 +51,8 @@ function Home() {
     }
     return (
         <div id="dashboard" className="flex flex-col overflow-x-hidden h-[100%]">
-            <div className=" grow h-[95%]  flex items-center justify-center border bg-gray-50 ">
-                <div className='h-full w-[95%]   flex justify-center'>
+            <div className=" grow h-[95%]  flex items-center justify-center border bg-gray-50 p-6  ">
+                <div className='h-full w-[100%]   flex justify-center bg-[#ffffff] border  rounded-lg'>
                     <svg viewBox={`0 0 ${layout.width} ${layout.height}`} preserveAspectRatio="xMidYMid meet">
                         <circle cx="46" cy="45" r="40"></circle>
                     </svg>

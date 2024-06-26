@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { ApsMainProps } from '@/interface/aps.interface';
-import { CircularProgress } from '@mui/material';
 import { ApsMainGetData } from '@/service/aps.service';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import moment from 'moment';
 function ApsMain() {
     let dateformat = 'DD/MM/YYYY';
@@ -29,8 +27,8 @@ function ApsMain() {
         try {
             setLoad(true);
             const res = await ApsMainGetData(moment(date, dateformat).format('YYYYMMDD'));
-            setDataMain(res.filter((o: ApsMainProps) => o.subline == 'ASSEMBLY LINE4 (SCR)'))
-            setDataFinal(res.filter((o: ApsMainProps) => o.subline == 'FINAL-ASSEMBLY LINE4 (SCR)'))
+            // setDataMain(res.filter((o: ApsMainProps) => o.subline == 'ASSEMBLY LINE4 (SCR)'))
+            // setDataFinal(res.filter((o: ApsMainProps) => o.subline == 'FINAL-ASSEMBLY LINE4 (SCR)'))
             setLoad(false);
         } catch (error: any) {
             alert(error.message)
@@ -77,7 +75,7 @@ function ApsMain() {
                     </tr>
                 </thead>
                 <tbody>
-                    {
+                    {/* {
                         load ? <tr><td className='border' colSpan={14}><div className='flex flex-col justify-center items-center py-3'>
                             <CircularProgress />
                             <span>กำลังโหลดข้อมูล</span>
@@ -119,7 +117,7 @@ function ApsMain() {
                                 </tr>
                             </>
                         })
-                    }
+                    } */}
                 </tbody>
             </table>
         </div>
