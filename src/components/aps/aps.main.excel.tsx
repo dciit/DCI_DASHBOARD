@@ -14,20 +14,16 @@ function ApsMainExcel() {
     let dateformat = 'DD/MM/YYYY';
     const [load, setLoad] = useState<boolean>(true);
     const [date, setDate] = useState<string>(moment().format(dateformat));
-    const [dataActive, setDataActive] = useState<any[]>([]);
     const [planSelected, setPlanSelected] = useState<ApsProductionPlanProps>({});
     const [openDialogNotice, setOpenDialogNotice] = useState<boolean>(false);
     const [openDialogAddSequence, setOpenDialogAddSequence] = useState<boolean>(false);
-    const [sequence, setSequence] = useState<ApsMainSequenceProps[]>([]);
     const [apsProductionPlan, setApsProductionPlan] = useState<ApsProductionPlanProps[]>([]);
     const [gasTight, setGasTight] = useState<GasTightProps[]>([]);
     let dateLoop: string = '';
     useEffect(() => {
         init();
     }, [])
-    useEffect(() => {
-        console.log(modelUse)
-    }, [modelUse])
+
     const init = async () => {
         try {
             setLoad(true)
@@ -240,7 +236,7 @@ function ApsMainExcel() {
                     </tbody>
                 </table>
             </div>
-            <ApsDialogNotice open={openDialogNotice} setOpen={setOpenDialogNotice} data={planSelected} setData={setPlanSelected} plan={apsProductionPlan} setPlan={setApsProductionPlan} />
+            <ApsDialogNotice open={openDialogNotice} apsLoad={init} setOpen={setOpenDialogNotice} data={planSelected} setData={setPlanSelected} plan={apsProductionPlan} setPlan={setApsProductionPlan} />
             <ApsDialogAddSequence open={openDialogAddSequence} close={setOpenDialogAddSequence} />
         </div >
     )

@@ -17,7 +17,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ApsInsertPlan from './aps.insert.plan';
 function ApsDialogNotice(props: PropsDialogNotice) {
-    const { open, setOpen, data, setData, plan, setPlan } = props;
+    const { open, setOpen, data, setData, plan, setPlan, apsLoad } = props;
     let dtNow: any = moment();
     let prdDate: string = moment(data.apsPlanDate?.toString(), 'YYYY-MM-DD').format('DD/MM/YYYY');
     const [param, setParam] = useState<PropsSaveNotice>(
@@ -37,8 +37,8 @@ function ApsDialogNotice(props: PropsDialogNotice) {
 
     const [ParamInsertPlan, setParamInsertPlan] = useState<APSInsertPlanProps>({ modelCode: '', prdQty: 0, prdPlanCode: '' });
 
-    const notify = () => toast("บันทึกข้อมูลเรียบร้อยแล้ว")
-    const notifyInsertPlanReqSelectModel = () => toast.error("กรุณาเลือก Model ก่อน")    
+    const notify = () => toast.success("บันทึกข้อมูลเรียบร้อยแล้ว")
+    const notifyInsertPlanReqSelectModel = () => toast.error("กรุณาเลือก Model ก่อน")
     const initData = async () => {
         let resReason: DictMstr[] = await API_GET_REASON();
         setReasons(resReason);
@@ -82,13 +82,18 @@ function ApsDialogNotice(props: PropsDialogNotice) {
     }
 
     const handleInsertPlan = async () => {
-        console.log(ParamInsertPlan)
-        if(typeof ParamInsertPlan.modelCode != 'undefined' || ParamInsertPlan.modelCode == undefined || ParamInsertPlan.modelCode == ''){
+        if (typeof ParamInsertPlan.modelCode == 'undefined' || ParamInsertPlan.modelCode == undefined || ParamInsertPlan.modelCode == '') {
             notifyInsertPlanReqSelectModel();
             return false;
+        } else {
+            let res: StatusProps = await API_APS_INSERT_PLAN(ParamInsertPlan);
+            if (res.status == true) {
+                toast.success("เพิ่มแผนเรียบร้อยแล้ว")
+                apsLoad();
+            } else {
+                alert(`${res.message} ${contact}`)
+            }
         }
-        console.log('insert')
-        let res: StatusProps = await API_APS_INSERT_PLAN(ParamInsertPlan)
     }
 
     useEffect(() => {
@@ -160,7 +165,7 @@ function ApsDialogNotice(props: PropsDialogNotice) {
                         </div>
                         {/* <ApsDND plan={plan} setPlan={setPlan} close={changePriority} /> */}
                         <ApsDND plan={plan} setPlan={setPlan} close={changePriority} planEdit={planEdit} setPlanEdit={setPlanEdit} />
-                        <div className='border-2 gap-2 bg-[#5c5fc8] border-[#5c5fc8]  text-white shadow-lg hover:opacity-100 opacity-80 transition-all px-[8px] pt-[6px] pb-[7px] rounded-md flex items-center justify-center cursor-pointer select-none' onClick={handleOpenInsertSequence}>
+                        <div className={`border-2 gap-2 bg-[#5c5fc8] border-[#5c5fc8]  text-white shadow-lg hover:opacity-100 ${openInsertPlan == true ? 'opacity-100' : 'opacity-80'} transition-all px-[8px] pt-[6px] pb-[7px] rounded-md flex items-center justify-center cursor-pointer select-none`} onClick={handleOpenInsertSequence}>
                             <AddCircleOutlineOutlinedIcon />
                             <span>เพิ่มแผนการผลิต</span>
                         </div>
@@ -216,10 +221,6 @@ function ApsDialogNotice(props: PropsDialogNotice) {
                                 <textarea
                                     className='border-2 bg-[#5c5fc810] focus:outline-none pt-1 pb-3 border-[#5c5fc8] rounded-lg w-full px-3 bg-gray-50' placeholder='คุณสามารถระบุหมายเหตุให้กับแผนการผลิตนี้ได้ ... ' rows={4} onChange={(e) => setRemark(e.target.value)} />
                             </div>
-                            {/* <div>
-                                <div className='text-[#5f5f5f]'>File & Image</div>
-                                <input type="file" multiple />
-                            </div> */}
                         </div>
                     </div>
                 </div>
@@ -227,11 +228,11 @@ function ApsDialogNotice(props: PropsDialogNotice) {
             <DialogActions>
                 <div onClick={() => setOpen(false)} className='border-[#5c5fc8] border text-[#5c5fc8] px-3 pt-1 pb-1 rounded-md bg-[#5c5fc810] cursor-pointer select-none transition-all duration-100 hover:scale-105'>ปิดหน้าต่าง</div>
                 {
-                    Object.keys(planEdit).length > 0 && <div onClick={() => true ? handleUpdatePlan() : false} className={`text-white px-4 pt-1 pb-1 rounded-md bg-[#3c3c3d] border border-[#5c5fc8] ${((planEdit.prdPlanQty != undefined && planEdit.prdPlanQty > 0) || (planEdit.prdPlanQty != undefined && planEdit.prdPlanQty == 0 && reason != '')) ? 'hover:scale-105 cursor-pointer' : 'opacity-60 cursor-not-allowed'}  select-none transition-all duration-100 `}>Save</div>
+                    Object.keys(planEdit).length > 0 && <div onClick={() => ((planEdit.prdPlanQty != undefined && planEdit.prdPlanQty > 0) || (planEdit.prdPlanQty != undefined && planEdit.prdPlanQty == 0 && reason != '')) ? handleUpdatePlan() : false} className={`text-white px-4 pt-1 pb-1 rounded-md bg-[#5c5fc8] border border-[#5c5fc8] ${((planEdit.prdPlanQty != undefined && planEdit.prdPlanQty > 0) || (planEdit.prdPlanQty != undefined && planEdit.prdPlanQty == 0 && reason != '')) ? 'hover:scale-105 cursor-pointer' : 'opacity-60 cursor-not-allowed'}  select-none transition-all duration-100 `}>Save</div>
                 }
                 {
                     openInsertPlan == true && <div className={`text-white px-4 pt-1 pb-1 rounded-md bg-[#5c5fc8] border border-[#5c5fc8] select-none cursor-pointer hover:scale-105 transition-all duration-100 `} onClick={handleInsertPlan}>
-                        ยืนยัน
+                        เพิ่ม
                     </div>
                 }
             </DialogActions>

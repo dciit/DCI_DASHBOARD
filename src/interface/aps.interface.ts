@@ -99,6 +99,7 @@ export interface PropsDialogNotice {
     setData: any;
     plan: ApsProductionPlanProps[];
     setPlan: any;
+    apsLoad: any;
 }
 
 
@@ -125,13 +126,13 @@ export interface PropsSaveNotice {
     remark: string;
 }
 export interface APSUpdatePlanProps {
-    prdPlanCode:string;
-    reasonCode:string;
-    prdPlanQty:number;
-    remark:string;
+    prdPlanCode: string;
+    reasonCode: string;
+    prdPlanQty: number;
+    remark: string;
 }
 export interface APSInsertPlanProps {
-    modelCode:string;
-    prdQty:number;
-    prdPlanCode:string;
+    modelCode: string;
+    prdQty: number;
+    prdPlanCode: string;
 }

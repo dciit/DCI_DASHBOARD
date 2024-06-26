@@ -29,11 +29,15 @@ const ApsDND = (props: ApsDNDProps) => {
             handleUpdatePriority();
         }
     }, [items])
-    // useEffect(() => {
-    //     // if (close == false) {
-    //     //     setPlan([]);
-    //     // }
-    // }, [close])
+
+    useEffect(() => {
+        setDND();
+    }, [plan])
+
+    const setDND = () => {
+        const newItems = Array.from(plan);
+        setItems(newItems.map((item, index) => ({ ...item, prdSeq: (moment(item.apsPlanDate).format(dateFormat) == dtNow.format(dateFormat) ? index + 1 : item.prdSeq)?.toString() })));
+    }
 
     const handleUpdatePriority = async () => {
         let resChange = await API_CHANGE_PRIORITY(items.filter((o: ApsProductionPlanProps) => moment(o.apsPlanDate).format(dateFormat) == dtNow.format(dateFormat)));

@@ -23,9 +23,6 @@ function ApsInsertPlan(props: ApsInsertPlanParam) {
     }
     return (
         <div className='grid grid-cols-1 p-6 pb-9 border rounded-lg shadow-lg gap-2'>
-            {
-                JSON.stringify(param)
-            }
             <div className='text-[#5c5fc8] flex items-center gap-2 mb-2'><AddCircleOutlineOutlinedIcon className='opacity-50 ' /><span className='font-semibold'>เพิ่มแผนการผลิต</span></div>
             <div>
                 <div>Model</div>
