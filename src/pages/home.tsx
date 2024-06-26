@@ -81,7 +81,7 @@ function Home() {
                             {
                                 menu.map((item, index) => {
                                     // return <Tab disabled={item.disable} key={index} label={item.text} iconPosition="start" icon={item.icon} />
-                                    return <div className={`flex items-center justify-center gap-2  cursor-pointer select-none py-3 min-w-[100px] text-center px-[14px] ${value == index ? 'text-[#5c5fc8] border-b-2 border-[#5c5fc8]   font-semibold' : 'text-[#5f5f5f]'} ${item.disable == true ? ' opacity-40 cursor-not-allowed' : ''}`} onClick={() => setComponentSelected(index)} key={index}>
+                                    return <div className={`bg-[#5c5fc8] flex items-center justify-center gap-2  cursor-pointer select-none py-3 min-w-[100px] text-center px-[14px] ${value == index ? 'text-[#5c5fc8] border-b-2 border-[#5c5fc8]   font-semibold' : 'text-[#5f5f5f]'} ${item.disable == true ? ' opacity-40 cursor-not-allowed' : ''}`} onClick={() => setComponentSelected(index)} key={index}>
                                         {item.icon}
                                         <div className=" text-[14px]">{item.text}</div>
                                     </div>
@@ -99,10 +99,7 @@ function Home() {
                 </div>
                 {/* <div id="content" className={`bg-gray-50 border-t border-[#eee] p-[14px] h-[100%] ${openDrawer == true ? '' : 'hidden'}`}>
                     {menu[value].component}
-                </div> */}
-                {/* <div id="content" className={`bg-gray-50 border-t border-[#eee] p-[14px] h-[100%]`}>
-                    {menu[value].component}
-                </div> */}
+                </div> */} 
                 {
                     (openComponent == true && componentSelected == 0) && <Manpower />
                 }
