@@ -31,13 +31,15 @@ function Home() {
     const [openDrawer, setOpenDrawer] = useState<boolean>(false)
     const [valueFac, setValueFac] = useState<number>(0)
     const [valueProcess, setValueProcess] = useState<number>(0);
+    const [openComponent, setOpenComponent] = useState<boolean>(false);
+    const [componentSelected, setComponentSelected] = useState<number | null>(null);
     const [menu, setmenu] = useState<MenuProps[]>([
-        { key: '1', text: 'Manpower', icon: <Groups3OutlinedIcon sx={{fontSize:'18px'}} />, component: <Manpower />, disable: false },
-        { key: '2', text: 'APS', icon: <LeaderboardOutlinedIcon sx={{fontSize:'18px'}} />, component: <Aps />, disable: false },
-        { key: '3', text: 'Line Effciency', icon: <SsidChartOutlinedIcon sx={{fontSize:'18px'}} />, component: <Effciency />, disable: false },
-        { key: '4', text: 'Machine Status', icon: <SpeedOutlinedIcon sx={{fontSize:'18px'}} />, component: <Result />, disable: true },
-        { key: '5', text: 'Line-Out', icon: <SyncAltOutlinedIcon sx={{fontSize:'18px'}} />, component: <Result />, disable: true },
-        { key: '86', text: 'Problem', icon: <WindPowerOutlinedIcon sx={{fontSize:'18px'}} />, component: <Result />, disable: true },
+        { key: '1', text: 'Manpower', icon: <Groups3OutlinedIcon sx={{ fontSize: '18px' }} />, component: <Manpower />, disable: false },
+        { key: '2', text: 'APS', icon: <LeaderboardOutlinedIcon sx={{ fontSize: '18px' }} />, component: <Aps />, disable: false },
+        { key: '3', text: 'Line Effciency', icon: <SsidChartOutlinedIcon sx={{ fontSize: '18px' }} />, component: <Effciency />, disable: false },
+        { key: '4', text: 'Machine Status', icon: <SpeedOutlinedIcon sx={{ fontSize: '18px' }} />, component: <Result />, disable: true },
+        { key: '5', text: 'Line-Out', icon: <SyncAltOutlinedIcon sx={{ fontSize: '18px' }} />, component: <Result />, disable: true },
+        { key: '86', text: 'Problem', icon: <WindPowerOutlinedIcon sx={{ fontSize: '18px' }} />, component: <Result />, disable: true },
     ])
     useEffect(() => {
         if (once == false) {
@@ -45,10 +47,24 @@ function Home() {
             setOpenDrawer(true);
         }
     }, [once, value])
+
+    useEffect(()=>{
+        if(openComponent == false){
+            setComponentSelected(null);
+        }
+    },[openComponent])
+    useEffect(() => {
+        if (componentSelected != null) {
+            setOpenComponent(true);
+        } else {
+            setOpenComponent(false);
+        }
+    }, [componentSelected])
     const handleChangeMenu = (menuIndex: number) => {
         setOpenDrawer(true);
         setValue(menuIndex);
     }
+
     return (
         <div id="dashboard" className="flex flex-col overflow-x-hidden h-[100%]">
             <div className=" grow h-[95%]  flex items-center justify-center border bg-gray-50 p-6  ">
@@ -65,7 +81,7 @@ function Home() {
                             {
                                 menu.map((item, index) => {
                                     // return <Tab disabled={item.disable} key={index} label={item.text} iconPosition="start" icon={item.icon} />
-                                    return <div className={`flex items-center justify-center gap-2  cursor-pointer select-none py-3 min-w-[100px] text-center px-[14px] ${value == index ? 'text-[#5c5fc8] border-b-2 border-[#5c5fc8]   font-semibold' : 'text-[#5f5f5f]'} ${item.disable == true ? ' opacity-40 cursor-not-allowed' : ''}`} onClick={() => item.disable == true ? null : handleChangeMenu(index)} key={index}>
+                                    return <div className={`flex items-center justify-center gap-2  cursor-pointer select-none py-3 min-w-[100px] text-center px-[14px] ${value == index ? 'text-[#5c5fc8] border-b-2 border-[#5c5fc8]   font-semibold' : 'text-[#5f5f5f]'} ${item.disable == true ? ' opacity-40 cursor-not-allowed' : ''}`} onClick={() => setComponentSelected(index)} key={index}>
                                         {item.icon}
                                         <div className=" text-[14px]">{item.text}</div>
                                     </div>
@@ -81,9 +97,21 @@ function Home() {
                         </div>
                     </nav>
                 </div>
-                <div id="content" className={`bg-gray-50 border-t border-[#eee] p-[14px] h-[100%] ${openDrawer == true ? '' : 'hidden'}`}>
+                {/* <div id="content" className={`bg-gray-50 border-t border-[#eee] p-[14px] h-[100%] ${openDrawer == true ? '' : 'hidden'}`}>
                     {menu[value].component}
-                </div>
+                </div> */}
+                {/* <div id="content" className={`bg-gray-50 border-t border-[#eee] p-[14px] h-[100%]`}>
+                    {menu[value].component}
+                </div> */}
+                {
+                    (openComponent == true && componentSelected == 0) && <Manpower />
+                }
+                {
+                    (openComponent == true && componentSelected == 1) && <Aps openComponent={openComponent} setOpenComponent={setOpenComponent} />
+                }
+                {
+                    (openComponent == true && componentSelected == 1) && <Effciency />
+                }
             </div>
         </div >
         // <div className="flex flex-col gap-2 h-[100%]">

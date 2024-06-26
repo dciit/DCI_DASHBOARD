@@ -13,3 +13,7 @@ export interface ReduxInterface {
     pren: string;
     fullname: string;
 }
+export interface ComponentProp {
+    openComponent: boolean;
+    setOpenComponent: Function;
+}
