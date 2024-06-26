@@ -5,3 +5,12 @@ html,body,#root {
   height: 100%;
   width: 100%;
 }
+
+
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), url(./assets/fonts/Inter.ttf) format('woff');
+}
+#dashboard * {
+ font-family: 'Inter';
+}

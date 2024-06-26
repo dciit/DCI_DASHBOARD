@@ -40,7 +40,6 @@ function ToolbarComponent() {
     }
     useEffect(() => {
         let check = true;
-        console.log(Object.keys(redux))
         reduxCheck.map((o: string) => {
             if (!Object.keys(redux).includes(o)) {
                 check = false;
@@ -56,7 +55,7 @@ function ToolbarComponent() {
         }
     }, [])
     return (
-        <div className='h-[50px] flex-none bg-[#232323] sticky top-0 border-b'>
+        <div className='h-[45px] flex-none bg-[#5c5fc8] sticky top-0 border-b'>
             <div className='grid grid-cols-7 h-full'>
                 <div className='col-span-2 flex items-center pl-3'>
                     <IconButton onClick={toggleDrawer(true)} sx={{ color: 'white' }}    ><DensityMediumIcon /></IconButton>
@@ -69,7 +68,7 @@ function ToolbarComponent() {
                     </Drawer>
                 </div>
                 <div className='col-span-3 flex items-center justify-center' >
-                    <span className='text-white' onClick={handleHome}>{projectName}</span>
+                    <span className='text-white uppercase font-semibold' onClick={handleHome}>{projectName}</span>
                 </div>
                 <div className='col-span-2 flex items-center justify-end pr-3'>
                     {
